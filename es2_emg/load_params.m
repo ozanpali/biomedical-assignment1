@@ -1,4 +1,4 @@
-% Step 1: Load the data
+    % Step 1: Load the data
 
 Fs = 2000;  % Sampling frequenc
 load('ES2_emg.mat') %loading data to matlab
