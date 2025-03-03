@@ -3,7 +3,7 @@ load('ES1_emg.mat');
 
 % Extract EMG signal and sampling frequency
 Fs = 2000; % Sampling frequency
-emg_signal = Es1_emg.matrix(:, 1); % Assuming first column is EMG
+emg_signal = Es1_emg.matrix(:, 1);
 
 t = (0:length(emg_signal)-1)/Fs; % Time vector
 
@@ -27,7 +27,7 @@ down_factor = 10;
 downsampled_time = t(1:down_factor:end);
 downsampled_env = envelope(1:down_factor:end);
 downsampled_emg = filtered_emg(1:down_factor:end);
-downsampled_movement = Es1_emg.matrix(1:down_factor:end, 2); % Assume Acc:X as movement signal
+downsampled_movement = Es1_emg.matrix(1:down_factor:end, 3); % Assume Acc:Y as movement signal
 
 %% Plot results
 figure(1);
@@ -41,7 +41,7 @@ xlabel('Time (s)'); ylabel('Amplitude');
 legend('Raw EMG', 'Filtered EMG');
 
 % Panel 2: Rectified vs. Envelope
-subplot(3,1,2);
+subplot(3,1,2); 
 plot(t, rectified_emg, 'k'); hold on;
 plot(t, envelope, 'r');
 title('Rectified EMG vs. Envelope');
@@ -50,9 +50,9 @@ legend('Rectified EMG', 'Envelope');
 
 % Panel 3: Movement vs. Envelope
 subplot(3,1,3);
-plot(downsampled_time, downsampled_movement, 'k'); hold on;
+plot(downsampled_time, (downsampled_movement*100)+70, 'k'); hold on;
 plot(downsampled_time, downsampled_env, 'r');
-title('Movement vs. Envelope');
+title('Movement(Y axis) vs. Envelope');
 xlabel('Time (s)'); ylabel('Amplitude');
 legend('Movement Signal', 'Envelope');
 
@@ -73,4 +73,7 @@ hold off;
 
 % Question2: Based on the motion signal, when does the muscle activation 
 % commence in relation to the movement?
-% Answer2:  
+% Answer2: Muscle activation commences before the movement.
+% This happens because the nervous system sends signals to the muscles 
+% in advance to prepare for the motion. This pre-activation is essential 
+% for stability, coordination, and efficient movement execution
